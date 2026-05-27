@@ -96,7 +96,7 @@ DELETE FROM paimon_tables WHERE table_name = 't1';
 | --- | --- | --- |
 | Language | Java 17 | Good Spring Boot 3 support and long-term runtime baseline. |
 | Framework | Spring Boot 3.x | REST, security, configuration, actuator, and K8s support are mature. |
-| Catalog backend | Apache Paimon `JdbcCatalog` | Official implementation; avoids reimplementing Paimon metadata semantics. |
+| Catalog backend | Apache Paimon 1.4.1 `JdbcCatalog` | Official implementation; avoids reimplementing Paimon metadata semantics. |
 | Catalog DB | MySQL 8.x / RDS | Stores JDBC catalog metadata, locks, audit, permissions. |
 | Connection pool | HikariCP | Default and reliable Spring Boot pool. |
 | DB migration | Flyway | Versioned governance schema migrations. |
@@ -105,6 +105,12 @@ DELETE FROM paimon_tables WHERE table_name = 't1';
 | Logging | Logback JSON logs | Easier log collection and trace correlation. |
 | API docs | OpenAPI / springdoc | Documents admin APIs; official Paimon REST API follows Paimon OpenAPI. |
 | Deployment | Kubernetes Deployment | Stateless service with horizontal replicas. |
+
+Maven version target:
+
+```xml
+<paimon.version>1.4.1</paimon.version>
+```
 
 ## Runtime Topology
 
@@ -542,7 +548,7 @@ K8s tests:
 
 | Risk | Mitigation |
 | --- | --- |
-| Paimon REST API changes across versions | Pin Paimon version and add compatibility tests. |
+| Paimon REST API changes across versions | Pin Paimon version to 1.4.1 and add compatibility tests. |
 | MySQL metadata and warehouse files become inconsistent after failure | Use Paimon APIs only, record failures, provide orphan cleanup procedure. |
 | Concurrent alter conflicts | Enable JdbcCatalog lock and test multi-pod concurrency. |
 | Over-caching stale metadata | Avoid table metadata cache in MVP. |
